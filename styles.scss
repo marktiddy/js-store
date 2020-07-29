@@ -1,0 +1,186 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;700&display=swap');
+//300 500 700
+
+$mainFont: 'Montserrat', sans-serif;
+$lightText: 300;
+$regularText: 400;
+$boldText: 700;
+
+//Colors
+$darkCol:#252d26;
+$lightCol:#a1ceb6;
+$regCol:#5d7c61;
+$accentCol: #6d9695;
+
+* {
+  box-sizing: border-box;
+  margin:0;
+  padding:0;
+}
+
+
+body {
+  font-family: $mainFont;
+  font-weight: $regularText;
+  font-size: 14px;
+}
+
+header {
+  background: $lightCol;
+  height: 15vh;
+  padding: 1em;
+  display: flex;
+  place-items: center;
+  justify-content: space-between;
+
+}
+
+header h1 {
+  color: $darkCol;
+  font-weight: $lightText;
+  font-size: 1.5rem;
+text-transform:uppercase;
+  display:flex;  
+  justify-content: space-between;
+
+}
+
+nav li {
+  list-style: none;
+  display: inline-block;
+  padding-right:10px;
+}
+
+
+
+nav a {
+  background: $accentCol;
+  color: white;
+  font-weight:$lightText;
+  border-radius: 5px;
+  padding: 0.5rem;
+  text-decoration: none;
+  transition: all 300ms;
+}
+
+nav a:hover {
+  background: $darkCol;
+  cursor: pointer;
+}
+
+
+
+li svg {
+  height: 1rem;
+  width: 1rem;
+  place-items:center;
+  vertical-align: middle;
+}
+
+li span {
+  margin-left: 5px;
+}
+
+.container {
+  color: $darkCol;
+  font-weight: $lightText;
+  padding: 1rem;
+  text-align:center;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-gap: 1em;
+
+
+ 
+}
+
+.item {
+  background: #eee;
+  border-radius: 5px;
+  position: relative;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+
+}
+
+.item img {
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  width: 100%;
+  height:100%;
+  object-fit: fill;
+  display: cover;
+ 
+}
+
+.item h2, {
+  color: $lightText;
+  position: absolute;
+  text-align: center;
+margin-top: 0.5em;
+font-size: 1rem;
+color:white;
+  width: 100%;
+}
+
+.item p {
+  padding: 0.5em;
+}
+
+.sale {
+  background:red;
+  margin-bottom:1em;
+  display:inline-block;
+  border-radius: 5px;
+  font-size: 0.6rem;
+  color:white;
+  display: inline-block;
+ 
+}
+
+.add-cart {
+  background: $regCol;
+  color: white;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+  transition: all 500ms;
+  width: 100%;
+  
+ 
+}
+
+.add-cart:hover {
+  cursor: pointer;
+  background: $accentCol;
+}
+
+.added-to-cart {
+  background:red !important;
+}
+
+.shopping-cart {
+  padding: 1rem;
+}
+
+.shopping-cart h1 {
+  color: $darkCol;
+  font-weight: $lightText;
+  text-align: center;
+}
+
+.cart-container {
+  background: #ccc;
+  width: 90vw;
+  margin-top:1rem;
+  
+}
+
+@media only screen and (max-width: 600px) {
+  body {
+    font-size: 10px;
+  }
+.container {
+grid-template-columns: 1fr;
+}
+}
+
