@@ -221,5 +221,9 @@ function setPlusMinus() {
 
 function reloadCartCount() {
   const cartNum = localStorage.getItem('cartNumbers');
-  document.querySelector('.cart-count').textContent = parseInt(cartNum);
+  if (cartNum) {
+    document.querySelector('.cart-count').textContent = parseInt(cartNum);
+  } else {
+    document.querySelector('.cart-count').textContent = 0;
+  }
 }
