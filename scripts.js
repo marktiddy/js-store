@@ -39,7 +39,7 @@ const addItems = async () => {
     <h2>${m.name}</h2>
     <img src="${m.image}" alt="${m.title}">
     <p>${m.description}</p>
-    <p>${m.price}</p>
+    <p>£${m.price}</p>
     ${m.sale ? `<p class="sale">On Sale</p>` : ''}
     <p class="add-cart" data-product=${m.id}>Add to Cart</p>
     </div>
@@ -50,7 +50,10 @@ const addItems = async () => {
 
 window.addEventListener('load', () => {
   //Select all our add cards
-  addItems();
+  if (document.querySelector('.container')) {
+    addItems();
+  }
+
   setTimeout(() => {
     const cartButtons = document.querySelectorAll('.add-cart');
     for (let i = 0; i < cartButtons.length; i++) {
@@ -115,9 +118,108 @@ function setItems(product) {
 
 //Our Cart file script
 function displayCart() {
+  const cartPageContainer = document.querySelector('.cart-container');
   let cartItems = JSON.parse(localStorage.getItem('productsInCart'));
+  if (cartItems && cartPageContainer) {
+    cartPageContainer.innerHTML = '';
+    let totalCost = 0;
+
+    //First add headings
+    const headings = document.createElement('div');
+    headings.classList.add('single-cart-item');
+    headings.classList.add('cart-title');
+    headings.innerHTML = `
+    <p>Item</p>
+    <p class="quantity-cell">Quantity</p>
+    <p>Item Cost</p>
+    <p>Total Cost</p>`;
+    cartPageContainer.appendChild(headings);
+    //Go through our objects
+    Object.values(cartItems).map((item) => {
+      const newItem = document.createElement('div');
+      newItem.classList.add('single-cart-item');
+      newItem.innerHTML = `
+      <p><img src="${item.image}">${item.name}</p>
+      <p class="quantity-cell"><span class="reduce" data-product=${
+        item.id
+      }>-</span><span class="in-cart-total">${
+        item.inCart
+      }</span><span class="increase" data-product="${item.id}">+</span></p>
+      <p>£${item.price}</p>
+      <p>£${parseFloat(item.price) * parseFloat(item.inCart)}</p>
+      `;
+      cartPageContainer.appendChild(newItem);
+      totalCost = totalCost + parseFloat(item.price) * parseFloat(item.inCart);
+    });
+    const costItem = document.createElement('div');
+    costItem.classList.add('single-cart-item');
+    costItem.classList.add('total-cart-cost');
+    costItem.innerHTML = `
+    <p></p><p></p><p>Total</p><p>£${totalCost}</p>`;
+    cartPageContainer.appendChild(costItem);
+    setPlusMinus();
+  } else if (cartPageContainer) {
+    cartPageContainer.innerHTML = '';
+    const message = document.createElement('div');
+    message.textContent =
+      "Looks like you don't have anything in your cart...time to go shopping!";
+    cartPageContainer.appendChild(message);
+  }
 }
 
 //Functions to run on load
 checkCart();
 displayCart();
+
+function setPlusMinus() {
+  //Add Event Listeners to plus and minus
+  const cartPageContainer = document.querySelector('.cart-container');
+
+  if (cartPageContainer) {
+    const increaseButtons = document.querySelectorAll('.increase');
+    const decreaseButtons = document.querySelectorAll('.reduce');
+    let cartItems = JSON.parse(localStorage.getItem('productsInCart'));
+    let productNumbers = localStorage.getItem('cartNumbers');
+
+    //Set up increase buttons
+    for (let i = 0; i < increaseButtons.length; i++) {
+      increaseButtons[i].addEventListener('click', () => {
+        const id = increaseButtons[i].getAttribute('data-product');
+        cartItems[id].inCart++;
+        productNumbers = parseInt(productNumbers) + 1;
+        localStorage.setItem('productsInCart', JSON.stringify(cartItems));
+        localStorage.setItem('cartNumbers', productNumbers);
+        displayCart();
+        reloadCartCount();
+      });
+    }
+
+    //Set up decrease buttons
+    for (let i = 0; i < decreaseButtons.length; i++) {
+      decreaseButtons[i].addEventListener('click', () => {
+        const id = decreaseButtons[i].getAttribute('data-product');
+        cartItems[id].inCart--;
+        //If its now zero we should remove it
+        if (cartItems[id].inCart === 0) {
+          delete cartItems[id];
+        }
+
+        if (Object.keys(cartItems).length === 0) {
+          localStorage.removeItem('productsInCart');
+          localStorage.removeItem('cartNumbers');
+        } else {
+          productNumbers = parseInt(productNumbers) - 1;
+          localStorage.setItem('productsInCart', JSON.stringify(cartItems));
+          localStorage.setItem('cartNumbers', productNumbers);
+        }
+        displayCart();
+        reloadCartCount();
+      });
+    }
+  }
+}
+
+function reloadCartCount() {
+  const cartNum = localStorage.getItem('cartNumbers');
+  document.querySelector('.cart-count').textContent = parseInt(cartNum);
+}

@@ -160,6 +160,8 @@ color:white;
 
 .shopping-cart {
   padding: 1rem;
+  text-align: center;
+ 
 }
 
 .shopping-cart h1 {
@@ -169,10 +171,79 @@ color:white;
 }
 
 .cart-container {
-  background: #ccc;
+  background: #efefef;
+  border-radius: 5px;
+  padding: 1em;
   width: 90vw;
-  margin-top:1rem;
+  text-align: center;
+  margin: 1rem auto;
+  display:flex;
+  flex-direction: column;
+
+}
+
+.single-cart-item {
+  margin-top:2em;
+  display:grid;
+ grid-template-columns: 3fr 1fr 1fr 1fr;
+ font-weight: $lightText;
+ font-size: 0.7rem;
+ color:$darkCol;
+ grid-gap: 1em;
+}
+
+.single-cart-item img {
+  height: 5em;
+  width: 5em;
+  float: left;
+  margin-right: 3px;
+}
+
+.cart-title {
+  font-weight:$regularText;
   
+}
+
+.total-cart-cost {
+  color: $regCol;
+  font-weight: $regularText;
+}
+
+.btn {
+  float:right;
+  margin-right:5%;
+  margin-top:2em;
+  background:$accentCol;
+  border-radius: 5px;
+  padding: 5px;
+  font-size:0.8rem;
+  color:white;
+  font-weight:$lightText;
+  transition: all 500ms;
+}
+
+.btn:hover {
+  cursor: pointer;
+  background:$darkCol;
+}
+
+.quantity-cell {
+  text-align:center;
+}
+
+.reduce, .increase {
+  margin: 0.5rem;
+  background:$accentCol;
+  color:white;
+  padding: 0px 3px;
+  font-size: 1rem;
+  width: 10px;
+  transition: all 500ms;
+}
+
+.reduce:hover, .increase:hover {
+  cursor: pointer;
+  background:$darkCol;
 }
 
 @media only screen and (max-width: 600px) {
